@@ -12,6 +12,12 @@ const corsOptions ={
     origin:"http//localhost:5173",
     Credentials:true
 }
+app.get("/home",(req,res)=>{
+        return res.status(200).json({
+            message:"i am coming from backing",
+            success:true
+        })
+})
 app.use(cors(corsOptions))
 
 const PORT = 3000;
