@@ -29,7 +29,12 @@ const userSchema = new mongoose.Schema({
         skills:[{type:String}],
         resume:{type:String}, //url to resume file 
         resumerOriginalName:{stype:String},
-        company:{type:mongoose.Schema.Types.ObjectId}
+        company:{type:mongoose.Schema.Types.ObjectId, ref:"company"},
+        profilePhoto:{
+            default:"",
+            type:"String"
+        }
     }
 
-})
+},{timestamps:true})
+export const User = mongoose.model('User', userSchema)
