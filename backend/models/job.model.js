@@ -6,25 +6,48 @@ const jobSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    email:{
+    description:{
         type:String,
         required:true,
-        unique:true
+        
     },
-    phoneNumber:{
-        type:Number,
-        required:true
-    },
-    password:{
-        type:Number,
-        required:true
-    },
-    role:{
+    requirments:[{
         type:String,
-        enum:['student','recruiter'],
+        
+    }],
+    salary:{
+        type:Number,
         required:true
     },
+    location:{
+        type:String,
+        required:true
+    },
+    jobType:{
+        type:String,
+        required:true
+    },
+    position:{
+        type:Number,
+        required:true
+    },
+    company:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:"company"
+    },
+    created_by:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:"User"
+    },
+    application:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Application"
+    }
 
     
 
 },{timestamps:true})
+
+export const Job = mongoose.model("Job",jobSchema)
