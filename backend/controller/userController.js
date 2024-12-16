@@ -1,10 +1,10 @@
 import { User } from "../models/user.model.js";
-
-
+import bcrypt from "bcryptjs"
+//  ye me user k registration k liye aik controller bana rha hu 
 export const registure = async (req,res)=>{
     try {
-        const {fullName,email,phoneNumber,password,role}= req.body;
-        if(!fullName || !email || !phoneNumber || !password || !role){
+        const {fullname,email,phoneNumber,password,role}= req.body;
+        if(!fullname || !email || !phoneNumber || !password || !role){
             return res.status(400).json({
                 message:"something is missing",
                 success:false
@@ -17,7 +17,18 @@ export const registure = async (req,res)=>{
                 success:false
             })
         }
+        const hashedPassword = await bcrypt.hash(password,10);
+        await User.create({
+            fullname,
+            email,
+            phoneNumber,
+            password:hashedPassword,
+            role
+        })
+
     } catch (error) {
         
     }
 }
+
+// ab me user k login k liye aik controller bana rha hu 
