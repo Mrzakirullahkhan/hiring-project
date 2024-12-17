@@ -8,6 +8,7 @@ export const registure = async (req,res)=>{
             return res.status(400).json({
                 message:"something is missing",
                 success:false
+                
             });
         };
         const user = await User.findOne({email});
@@ -18,7 +19,7 @@ export const registure = async (req,res)=>{
             })
         }
         const hashedPassword = await bcrypt.hash(password,10);
-        
+
         await User.create({
             fullname,
             email,
