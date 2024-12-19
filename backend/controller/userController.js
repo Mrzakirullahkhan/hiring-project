@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs"
+import jwt from 'jsonwebtoken';
 
 // registration
 //  ye me user k registration k liye aik controller bana rha hu 
@@ -79,12 +80,19 @@ export const login = async (req, res) => {
                 success: false,
             });
         }
-        // Continue with role check or token generation if needed
-
-        return res.status(200).json({
-            message: "Login successful",
-            success: true,
-        });
+        // yaha me token generate karunga user ka 
+        const tokenData ={
+            userId:user._id
+        }
+        const token = await jwt.sign(tokenData, process.env.SECRET_KEY,{expiresIn:"1d"})
+        return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpsOnly:true, sameSite:"strict"}).json({
+            message:`welcome back ${user.fullname}`,
+            success:true
+        })
+        // return res.status(200).json({
+        //     message: "Login successful",
+        //     success: true,
+        // });
 
     } catch (error) {
         console.error(error);
