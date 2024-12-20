@@ -30,6 +30,10 @@ export const registure = async (req,res)=>{
             password:hashedPassword,
             role
         })
+        return res.status(201).json({
+            message:"Account created successfully",
+            success:true
+        })
 
     } catch (error) {
         return res.status(400).json({
@@ -55,7 +59,7 @@ export const login = async (req, res) => {
         }
 
         // Find user by email
-        const user = await User.findOne({ email });
+        let user = await User.findOne({ email });
 
         if (!user) {
             return res.status(400).json({
@@ -84,9 +88,19 @@ export const login = async (req, res) => {
         const tokenData ={
             userId:user._id
         }
+        
         const token = await jwt.sign(tokenData, process.env.SECRET_KEY,{expiresIn:"1d"})
+        user = {
+            _id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            phoneNumber:user.phoneNumber,
+            role:user.role,
+            profile:user.profile
+        }
         return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpsOnly:true, sameSite:"strict"}).json({
             message:`welcome back ${user.fullname}`,
+            user,
             success:true
         })
         // return res.status(200).json({
@@ -102,3 +116,64 @@ export const login = async (req, res) => {
         });
     }
 };
+
+// ab logout ka banega 
+export const logout = async (req,res)=>{
+        try {
+            return res.status(200).cookie("token","",{maxAge:0}).json({
+                message:"logged out successfylly"
+            })
+        } catch (error) {
+            console.log(error)
+        }
+}
+
+// profile update krne ja rha hu me 
+export const updateProfile = async (req,res)=>{
+    try {
+        const {fullname, email,phoneNumber,bio,skills} = req.body;
+        const file = req.file
+        if(!fullname || !email || !phoneNumber || !bio || !skills){
+            return res.status(400).json({
+                message:"something is missing",
+                success:false
+                
+            });
+        };
+        // cloudenary aeyga idhar 
+        const skillsArray = skills.split("");
+        const userId = req.id;
+        let user = await User.findById(userId);
+        if(!user){
+            return res.status(400).json({
+                message:"User not found",
+                success:false
+            })
+        }
+        // update the user profile data
+        user.fullname = fullname,
+        user.email = email,
+        user.phoneNumber = phoneNumber,
+        user.phoneNumber.bio = bio,
+        user.profile.skills = skillsArray
+        // resume come later here 
+
+        await user.save()
+        user = {
+            _id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            phoneNumber:user.phoneNumber,
+            role:user.role,
+            profile:user.profile
+        }
+        return res.status(200).json({
+            message:"prfile update successfully",
+            user,
+            success:true
+        })
+
+    } catch (error) {
+        
+    }
+}
