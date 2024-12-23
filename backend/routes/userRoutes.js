@@ -6,3 +6,5 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
  router.route("/registure").post(registure)
  router.route("/login").post(login)
  router.route("/profile/update").post(isAuthenticated,updateProfile)
+
+ export default router
