@@ -21,8 +21,10 @@ app.use(cors(corsOptions))
 const PORT = process.env.PORT|| 3000;
 connectDB()
 
-// apis 
+// api
 app.use("/api/v1/user",userRoute)
 app.listen(PORT,()=>{
     console.log(`server running on PORT ${PORT}`)
 })
+
+"http://localhost:8000/api/v1/user"

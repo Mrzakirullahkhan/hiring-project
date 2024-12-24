@@ -9,7 +9,7 @@ export const registure = async (req,res)=>{
         const {fullname,email,phoneNumber,password,role}= req.body;
         if(!fullname || !email || !phoneNumber || !password || !role){
             return res.status(400).json({
-                message:"something is missing",
+                message:"something is missing z",
                 success:false
                 
             });
@@ -37,7 +37,7 @@ export const registure = async (req,res)=>{
 
     } catch (error) {
         return res.status(400).json({
-            message:"something is missing",
+            message:"something is missing a",
             success:false
             
         });
