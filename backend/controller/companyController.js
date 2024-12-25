@@ -1,7 +1,7 @@
 import {Company} from "../models/company.model.js"
 
 
-const registerCompany = async (req,res)=>{
+export const registerCompany = async (req,res)=>{
     try {
         const {compnayName} = req.body;
         if(!compnayName){

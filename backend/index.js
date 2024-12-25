@@ -4,6 +4,8 @@ import cors from "cors"
 import dotenv from "dotenv"
 import connectDB from "./utils/db.js";
 import userRoute from "../backend/routes/userRoutes.js"
+import companyRoute from "../backend/routes/companyRoutes.js"
+
 dotenv.config({})
 const app = express();
 
@@ -24,6 +26,7 @@ connectDB()
 
 // api
 app.use("/api/v1/user",userRoute)
+app.use("/api/v1/company",companyRoute)
 app.listen(PORT,()=>{
     console.log(`server running on PORT ${PORT}`)
 })
