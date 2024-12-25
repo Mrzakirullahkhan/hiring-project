@@ -64,6 +64,30 @@ export const getCompanyById = async (req,res)=>{
             status:true
         })
        } catch (error) {
-        
+        console.log(error)
+       }
+}
+
+
+// update companies 
+export const updateCompany = async (req, res) =>{
+       try {
+        const {name, description, website, location} = req.body;
+        // idhar cloudanry aega
+       
+        const updateData = {name, description, website, location};
+        const company = await Company.findByIdAndUpdate(req.params.id, updateData, {new:true});
+        if(!company){
+             return res.status(404).json({
+                message:"company no found",
+                success:false
+             })
+        }
+        return res.status(200).json({
+            message:"company information updated",
+            success:true
+        })
+       } catch (error) {
+        console.log(error)
        }
 }
