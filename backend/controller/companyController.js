@@ -43,6 +43,11 @@ export const getCompany = async (req,res)=> {
                 status:false
             })
         }
+        return res.status(200).json({
+            message:"companies are available for this user",
+            companies,
+            success:true
+        })
       } catch (error) {
         console.log(error)
       }
