@@ -2,7 +2,7 @@ import { Job } from "../models/job.model.js";
 
 
 
-// post job k liye hai ye 
+// ye job post admin krega 
 export const postJob = async (req,res) => {
        try {
         const  {title, description, requirments, salary, location, jobType, experience, position, companyId}=req.body;
@@ -36,7 +36,7 @@ export const postJob = async (req,res) => {
        }
 }
 
-// ab yaha me sab jobs ko get krunga jo me search me dekna chah rha hu 
+// ab yaha me sab jobs ko get krunga jo me search me dekna chah rha hu (student)
 
 export const getAllJobs = async ()=>{
     try {
@@ -64,7 +64,7 @@ export const getAllJobs = async ()=>{
     }
 }
 
-// ab me job get krunga user ki id se jo login hai 
+// ab me job get krunga user ki id se jo login hai (student)
 
 export const getJobById = async (req,res)=>{
     try {
@@ -85,3 +85,25 @@ export const getJobById = async (req,res)=>{
         console.log(error)
     }
 }
+
+// admin  login 
+export const getAdminJobs = async (req,res) =>{
+    try {
+        const adminId = req.id;
+        const jobs = await  Job.find({created_by:adminId})
+        if(!jobs){
+            return res.status(404).json({
+                message:"jobs not found",
+                success:false
+            })
+
+        }
+        return res.status(200).json({
+            jobs,
+            success:true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
