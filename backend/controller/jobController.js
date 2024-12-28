@@ -38,16 +38,15 @@ export const postJob = async (req,res) => {
 
 // ab yaha me sab jobs ko get krunga jo me search me dekna chah rha hu (student)
 
-export const getAllJobs = async ()=>{
+export const getAllJobs = async (req,res)=>{
     try {
-        const keyword = req.query.keyword || "" ;
+        const keyword = req.query.keyword || "";
         const query = {
-            $or:[
-                {title:{$regex:keyword, $option:"i"}},
-                {description:{$regex:keyword, $option:"i"}},
-
+            $or: [
+                { title: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } }
             ]
-        }
+        };
         const jobs = await Job.find(query);
         if(!jobs){
             return res.status(404).json({
