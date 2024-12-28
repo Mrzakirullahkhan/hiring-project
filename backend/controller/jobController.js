@@ -69,7 +69,7 @@ export const getAllJobs = async (req,res)=>{
 
 export const getJobById = async (req,res)=>{
     try {
-        const jobId = res.params.id;
+        const jobId = req.params.id;
         const job = await Job.findById(jobId)
         if(!job){
             return res.status(404).json({
@@ -78,6 +78,7 @@ export const getJobById = async (req,res)=>{
         })
         }
 
+        
         return res.status(200).json({
             job,
             success:true
