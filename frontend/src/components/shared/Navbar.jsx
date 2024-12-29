@@ -6,6 +6,7 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { LogOut, User2 } from "lucide-react";
 
 function Navbar() {
+    const user = false;
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto mx-w-7xl h-16 ">
@@ -20,6 +21,7 @@ function Navbar() {
             <li>Job</li>
             <li>Browser</li>
           </ul>
+        
           <Popover>
             <PopoverTrigger asChild>
               <Avatar className="cursor-pointer w-12 h-12 rounded-full">
