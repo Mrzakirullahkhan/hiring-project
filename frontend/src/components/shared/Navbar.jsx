@@ -21,45 +21,56 @@ function Navbar() {
             <li>Job</li>
             <li>Browser</li>
           </ul>
-        
-          <Popover>
-            <PopoverTrigger asChild>
-              <Avatar className="cursor-pointer w-12 h-12 rounded-full">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                  className="w-full h-full rounded-full"
-                />
-              </Avatar>
-            </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="flex gap-4 space-y-2">
-                <Avatar className="cursor-pointer w-12 h-12 rounded-full">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                    className="w-full h-full rounded-full"
-                  />
-                </Avatar>
-                <div>
-                  <h4 className="font-medium">zakir khan</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Mern stack developer
-                  </p>
+       
+       {
+            !user ? (
+                <div className="flex item-center gap-2">
+                    <Button variant="outline">Login</Button>
+                    <Button className="bg-[#6A38C3] hover:bg-[#421c8a]">Signup</Button>
                 </div>
-              </div>
-              <div className="flex flex-col text-grey-600">
-                <div className="flex w-fit items-center gap-3 cursor-pointer">
-                  <User2 />
-                  <Button  variant="link" className="border-none">View Profile</Button>
-                </div>
-                <div className="flex w-fit items-center gap-3 cursor-pointer">
-                  <LogOut />
-                  <Button variant="link" className="border-none">Logout</Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+            ) :(
+                <Popover>
+                <PopoverTrigger asChild>
+                  <Avatar className="cursor-pointer w-12 h-12 rounded-full">
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                      className="w-full h-full rounded-full"
+                    />
+                  </Avatar>
+                </PopoverTrigger>
+                <PopoverContent className="w-80">
+                  <div className="flex gap-4 space-y-2">
+                    <Avatar className="cursor-pointer w-12 h-12 rounded-full">
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                        className="w-full h-full rounded-full"
+                      />
+                    </Avatar>
+                    <div>
+                      <h4 className="font-medium">zakir khan</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Mern stack developer
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col text-grey-600">
+                    <div className="flex w-fit items-center gap-3 cursor-pointer">
+                      <User2 />
+                      <Button  variant="link" className="border-none">View Profile</Button>
+                    </div>
+                    <div className="flex w-fit items-center gap-3 cursor-pointer">
+                      <LogOut />
+                      <Button variant="link" className="border-none">Logout</Button>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )
+        }
+       
+       
         </div>
       </div>
     </div>
