@@ -1,7 +1,9 @@
 import React from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup } from "../ui/radio-group";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   return (
@@ -46,18 +48,33 @@ function SignUp() {
             />
           </div>
           <div>
-            <RadioGroup defaultValue="comfortable">
+            <RadioGroup className="flex items-center gap-4">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="default" id="r1" />
+                <input 
+                type="radio"
+                name="role"
+                value="student"
+                className="cursor-pointer"
+                 />
                 <Label htmlFor="r1">Student</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
+              <input 
+                type="radio"
+                name="role"
+                value="Recruiter"
+                className="cursor-pointer"
+                 />
                 <Label htmlFor="r2">Recruiter</Label>
               </div>
-            
             </RadioGroup>
+            <div className="flex items-center gap-2 mt-2">
+                <label>Profile</label>
+                <input type="file" accept="image/*" className="cursor-pointer" />
+            </div>
           </div>
+          <Button className="w-full mt-4">Signup</Button>
+          <span className="text-sm gap-3">Alreay have an account ? <Link to="/login" className="text-red-600">Login</Link></span>
         </form>
       </div>
     </div>
