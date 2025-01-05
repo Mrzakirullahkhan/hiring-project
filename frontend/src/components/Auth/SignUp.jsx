@@ -6,6 +6,21 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 function SignUp() {
+    const [input, setinput] = useState({
+        fullname: "",
+        phoneNumber: "",
+        email:"",
+        file:"",
+        role: "",
+        password: "",
+      });
+    // handler function 
+      const changeEventHandler =(e)=>{
+                 setinput({...input, [e.target.name]:e.target.value})
+      }
+      const changeFileHandler =()=>{
+        setinput({...input, file:e.target.files?.[0]})
+      }
   return (
     <div>
       <Navbar />
@@ -19,6 +34,9 @@ function SignUp() {
             <Label> Full Name</Label>
             <input
               placeholder="Enter name"
+              value={input.fullname}
+              name="fullname"
+              onChange={changeEventHandler}
               type="text"
               className="w-full p-2 border rounded"
             />
@@ -27,6 +45,9 @@ function SignUp() {
             <Label>Email</Label>
             <input
               placeholder="Enter your email"
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
               type="text"
               className="w-full p-2 border rounded"
             />
@@ -35,6 +56,9 @@ function SignUp() {
             <Label>Password</Label>
             <input
               placeholder="Enter name"
+              value={input.password}
+              name="password"
+              onChange={changeEventHandler}
               type="password"
               className="w-full p-2 border rounded"
             />
@@ -43,6 +67,9 @@ function SignUp() {
             <Label>Phone</Label>
             <input
               placeholder="Enter name"
+              value={input.phoneNumber}
+              name="phoneNumber"
+              onChange={changeEventHandler}
               type="password"
               className="w-full p-2 border rounded"
             />
@@ -54,6 +81,8 @@ function SignUp() {
                 type="radio"
                 name="role"
                 value="student"
+                checked={input.role==="student"}
+                onChange={changeEventHandler}
                 className="cursor-pointer"
                  />
                 <Label htmlFor="r1">Student</Label>
@@ -62,7 +91,9 @@ function SignUp() {
               <input 
                 type="radio"
                 name="role"
-                value="Recruiter"
+                value="recruiter"
+                checked={input.role==="recruiter"}
+                onChange={changeEventHandler}
                 className="cursor-pointer"
                  />
                 <Label htmlFor="r2">Recruiter</Label>
