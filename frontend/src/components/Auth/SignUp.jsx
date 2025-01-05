@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
@@ -18,15 +18,20 @@ function SignUp() {
       const changeEventHandler =(e)=>{
                  setinput({...input, [e.target.name]:e.target.value})
       }
-      const changeFileHandler =()=>{
+      const changeFileHandler =(e)=>{
         setinput({...input, file:e.target.files?.[0]})
       }
+    //   un submt form 
+    const onSubmitHandler = async(e)=>{
+        e.preventDefault();
+        console.log(input)
+     }
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
-          action=""
+          onSubmit={onSubmitHandler}
           className="w-1/2 border border-gray-200 my-10 rounded-md p-4 mx-auto"
         >
           <h1 className="font-bold text-xl mb-5">Sign Up</h1>
@@ -70,7 +75,7 @@ function SignUp() {
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeEventHandler}
-              type="password"
+              type="number"
               className="w-full p-2 border rounded"
             />
           </div>
@@ -101,7 +106,7 @@ function SignUp() {
             </RadioGroup>
             <div className="flex items-center gap-2 mt-2">
                 <label>Profile</label>
-                <input type="file" accept="image/*" className="cursor-pointer" />
+                <input type="file" onChange={changeFileHandler} accept="image/*" className="cursor-pointer" />
             </div>
           </div>
           <Button className="w-full mt-4">Signup</Button>
