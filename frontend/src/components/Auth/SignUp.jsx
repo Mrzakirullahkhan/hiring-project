@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
+import { toast } from "sonner";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/Utils/constant";
-import { toast } from "sonner";
+
 
 function SignUp() {
   const navigate = useNavigate();
@@ -34,6 +35,9 @@ function SignUp() {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
 
     try {
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
@@ -48,6 +52,7 @@ function SignUp() {
       }
     } catch (error) {
       console.log(error);
+    //   toast.success(error.res.data.message);
     }
   };
   return (
