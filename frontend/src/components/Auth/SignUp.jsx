@@ -3,11 +3,13 @@ import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/Utils/constant";
+import { toast } from "sonner";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [input, setinput] = useState({
     fullname: "",
     phoneNumber: "",
@@ -34,14 +36,19 @@ function SignUp() {
     formData.append("role", input.role);
 
     try {
-        const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } catch (error) {
-        console.log(error);
+      const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
       }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
