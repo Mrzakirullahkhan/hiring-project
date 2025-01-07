@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/Utils/constant";
 
-
 function SignUp() {
   const navigate = useNavigate();
   const [input, setinput] = useState({
@@ -27,16 +26,54 @@ function SignUp() {
     setinput({ ...input, file: e.target.files?.[0] });
   };
   //   un submt form
+  //   const onSubmitHandler = async (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData();
+  //     formData.append("fullname", input.fullname);
+  //     formData.append("email", input.email);
+  //     formData.append("phoneNumber", input.phoneNumber);
+  //     formData.append("password", input.password);
+  //     formData.append("role", input.role);
+  //     if (input.file) {
+  //       formData.append("file", input.file);
+  //     }
+
+  //     try {
+  //       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //         withCredentials: true,
+  //       });
+  //       if (res.data.success) {
+  //         navigate("/login");
+  //         toast.success(res.data.message);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     //   toast.success(error.res.data.message);
+  //     }
+  //   };
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    // Log input for debugging
+    console.log("Input Data:", input);
+
     const formData = new FormData();
-    formData.append("fullname", input.fullname);
-    formData.append("email", input.email);
-    formData.append("phoneNumber", input.phoneNumber);
-    formData.append("password", input.password);
-    formData.append("role", input.role);
+    formData.append("fullname", input.fullname || ""); // Ensure default value
+    formData.append("email", input.email || ""); // Prevent undefined
+    formData.append("phoneNumber", input.phoneNumber || "");
+    formData.append("password", input.password || "");
+    formData.append("role", input.role || "");
     if (input.file) {
       formData.append("file", input.file);
+    }
+
+    // Log formData for debugging
+    console.log("FormData Contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
 
     try {
@@ -44,17 +81,27 @@ function SignUp() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        withCredentials: true,
+        // withCredentials: true, // Optional: Remove if not required
       });
+
+      // Handle success response
       if (res.data.success) {
-        navigate("/login");
+        console.log("Response Data:", res.data);
         toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
-      console.log(error);
-    //   toast.success(error.res.data.message);
+      console.error("Error Response:", error.response);
+
+      // Display error message if available
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
+
   return (
     <div>
       <Navbar />
@@ -89,7 +136,7 @@ function SignUp() {
           <div className="my-2">
             <Label>Password</Label>
             <input
-              placeholder="Enter name"
+              placeholder="Enter password"
               value={input.password}
               name="password"
               onChange={changeEventHandler}
@@ -100,7 +147,7 @@ function SignUp() {
           <div className="my-2">
             <Label>Phone</Label>
             <input
-              placeholder="Enter name"
+              placeholder="Enter phone number"
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={changeEventHandler}
