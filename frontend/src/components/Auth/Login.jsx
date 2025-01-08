@@ -3,12 +3,13 @@ import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/Utils/constant";
 
 function Login() {
+    const navigate = useNavigate();
   const [input, setinput] = useState({
     email: "",
     role: "",
@@ -23,20 +24,21 @@ function Login() {
     e.preventDefault();
     // yaha me backend se data check kr rha hu
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-        headers: {
-          "Content-Type": "application.json",
-        },
-        withCredentials: true,
-      });
-      if (res.data.success) {
-        navigate("/");
-        toast.success(res.data.message);
-      }
+        const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(res)
+        if (res.data.success) {
+            navigate("/");
+            toast.success(res.data.message);
+        }
     } catch (error) {
-      console.log(error);
-    //   toast.success(error.res.data.message);
+        toast.error("Login failed. Please check your credentials.");
+      
     }
+
   };
 
   return (

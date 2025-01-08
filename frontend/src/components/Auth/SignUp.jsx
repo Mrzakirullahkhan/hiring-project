@@ -61,8 +61,8 @@ function SignUp() {
     console.log("Input Data:", input);
 
     const formData = new FormData();
-    formData.append("fullname", input.fullname || ""); // Ensure default value
-    formData.append("email", input.email || ""); // Prevent undefined
+    formData.append("fullname", input.fullname || "");
+    formData.append("email", input.email || ""); 
     formData.append("phoneNumber", input.phoneNumber || "");
     formData.append("password", input.password || "");
     formData.append("role", input.role || "");
