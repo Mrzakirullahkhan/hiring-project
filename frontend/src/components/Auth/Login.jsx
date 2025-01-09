@@ -3,13 +3,18 @@ import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/Utils/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader, Loader2 } from "lucide-react";
 
 function Login() {
-    const navigate = useNavigate();
+  const { loading } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [input, setinput] = useState({
     email: "",
     role: "",
@@ -24,21 +29,22 @@ function Login() {
     e.preventDefault();
     // yaha me backend se data check kr rha hu
     try {
-        const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        console.log(res)
-        if (res.data.success) {
-            navigate("/");
-            toast.success(res.data.message);
-        }
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
+      }
     } catch (error) {
-        toast.error("Login failed. Please check your credentials.");
-      
+      toast.error("Login failed. Please check your credentials.");
+    } finally {
+      dispatch(setLoading(false));
     }
-
   };
 
   return (
@@ -100,7 +106,15 @@ function Login() {
               </div>
             </RadioGroup>
           </div>
-          <Button className="w-full mt-4">Login</Button>
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 animate-spin" />
+              please wait
+            </Button>
+          ) : (
+            <Button className="w-full mt-4">Login</Button>
+          )}
+
           <span className="text-sm gap-3">
             Don't have an account ?{" "}
             <Link to="/signup" className="text-red-600">
