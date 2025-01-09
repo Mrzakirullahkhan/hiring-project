@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './shared/Navbar'
 import HeroSection from './HeroSection/HeroSection'
+import CatogeryCarousal from './CatogeryCarousal/CatogeryCarousal'
 
 
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
     <div>
         <Navbar/>
         <HeroSection/>
+        <CatogeryCarousal/>
       
     </div>
   )
