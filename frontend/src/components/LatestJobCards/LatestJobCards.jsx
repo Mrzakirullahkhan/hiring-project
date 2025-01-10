@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 
-function Cards() {
+function LatestJobCards() {
   return (
     // ye latest job wale cards hai 
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer">
@@ -30,4 +30,4 @@ function Cards() {
   );
 }
 
-export default Cards;
+export default LatestJobCards;

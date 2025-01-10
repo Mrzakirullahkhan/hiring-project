@@ -18,9 +18,10 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium item-center gap-5">
-            <li>Home</li>
-            <li>Job</li>
-            <li>Browser</li>
+            <li ><Link to="/home">Home</Link></li>
+            <li ><Link to="/jobs">Jobs</Link></li>
+            <li ><Link to="/Browser">Browser</Link></li>
+       
             
           </ul>
        

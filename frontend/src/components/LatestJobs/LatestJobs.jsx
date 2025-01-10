@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "../Cards/Cards";
+import LatestJobCards from "../LatestJobCards/LatestJobCards";
 
 function LatestJobs() {
   const AllJobs = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -11,7 +11,7 @@ function LatestJobs() {
       </h1>
       <div className=" grid grid-cols-3 gap-5 my-6">
         {AllJobs.slice(0, 6).map((item, index) => (
-          <Cards />
+          <LatestJobCards/>
         ))}
       </div>
     </div>
