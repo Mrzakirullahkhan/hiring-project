@@ -3,6 +3,7 @@ import Navbar from './shared/Navbar'
 import HeroSection from './HeroSection/HeroSection'
 import CatogeryCarousal from './CatogeryCarousal/CatogeryCarousal'
 import LatestJobs from './LatestJobs/LatestJobs'
+import Footer from './Footer/Footer'
 
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
         <HeroSection/>
         <CatogeryCarousal/>
         <LatestJobs/>
+        <Footer/>
       
     </div>
   )

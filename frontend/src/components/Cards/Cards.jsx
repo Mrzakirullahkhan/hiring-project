@@ -3,6 +3,7 @@ import { Badge } from "../ui/badge";
 
 function Cards() {
   return (
+    // ye latest job wale cards hai 
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer">
       <div>
         <h1 className="font-medium text-lg">Company Name</h1>
