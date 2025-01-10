@@ -18,14 +18,14 @@ const fitlerData = [
   },
   {
     fitlerType: "Salary",
-    array: ["0-40k", "50-1lakh", "1.2lakh to 5lakh"],
+    array: ["15k-40k", "50-1lakh", "1.2lakh to 5lakh"],
   },
 ];
 
 function FilterCard() {
   return (
     <div>
-      <h1>Filter Job</h1>
+      <h1 className="font-bold text-lg ">Filter Job</h1>
       <hr />
       <div className="mt-4">
         <RadioGroup>
