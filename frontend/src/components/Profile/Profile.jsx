@@ -11,7 +11,7 @@ import UpdateProfileDialog from "../UpdateProfileDialog/UpdateProfileDialog";
 
 const isResume = true;
 function Profile() {
-  const [open,setOpen]=useState(false)
+  const [open, setOpen] = useState(false);
   const skills = ["html", "css", "javascrip", ".net"];
   return (
     <div>
@@ -33,7 +33,11 @@ function Profile() {
               </p>
             </div>
           </div>
-          <Button className="text-right" onClick={() => setOpen(true)} variant="outline">
+          <Button
+            className="text-right"
+            onClick={() => setOpen(true)}
+            variant="outline"
+          >
             <Pen />
           </Button>
         </div>
@@ -77,7 +81,7 @@ function Profile() {
         {/* Applied Job Table   */}
         <AppliedJobTable />
       </div>
-      <UpdateProfileDialog open={open} setOpen={setOpen}/>
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
 }

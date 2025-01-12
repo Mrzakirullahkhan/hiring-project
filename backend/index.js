@@ -7,6 +7,7 @@ import userRoute from "../backend/routes/userRoutes.js"
 import companyRoute from "../backend/routes/companyRoutes.js"
 import jobRoute from "../backend/routes/jobRoutes.js"
 
+
 dotenv.config({})
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(cookieParser())
 
 const corsOptions ={
     origin:"http://localhost:5173",
-    Credentials:true
+    credentials:true
 }
 
 app.use(cors(corsOptions))

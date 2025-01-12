@@ -138,6 +138,7 @@ export const login = async (req, res) => {
         }
         
         const token = await jwt.sign(tokenData, process.env.SECRET_KEY,{expiresIn:"1d"})
+        console.log(token,"controllerrrrrrrrrrr ")
         user = {
             _id:user._id,
             fullname:user.fullname,
@@ -146,7 +147,7 @@ export const login = async (req, res) => {
             role:user.role,
             profile:user.profile
         }
-        return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpsOnly:true, sameSite:"strict"}).json({
+        return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpsOnly:true, sameSite:"strict",secure:false, domain: "localhost",}).json({
             message:`welcome back ${user.fullname}`,
             user,
             success:true
@@ -179,7 +180,11 @@ export const logout = async (req,res)=>{
 // profile update krne ja rha hu me 
 export const updateProfile = async (req,res)=>{
     try {
+        // console.log(req.body)
         const {fullname, email,phoneNumber,bio,skills} = req.body;
+        console.log(fullname)
+        console.log(email)
+   
         const file = req.file
        
         // cloudenary aeyga idhar 
@@ -198,7 +203,7 @@ export const updateProfile = async (req,res)=>{
         }
         // update the user profile data
         if(fullname) user.fullname = fullname
-        if(email) user.fullname = email
+        if(email) user.email = email
         if(phoneNumber) user.fullname = phoneNumber
         if(bio) user.profile.skills = bio
         if(skills) user.profile.skills = skillsArray
