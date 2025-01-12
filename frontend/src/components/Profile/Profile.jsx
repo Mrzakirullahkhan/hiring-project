@@ -33,8 +33,8 @@ function Profile() {
               </p>
             </div>
           </div>
-          <Button className="text-right" variant="outline">
-            <Pen onClick={()=>setOpen(true)} />
+          <Button className="text-right" onClick={() => setOpen(true)} variant="outline">
+            <Pen />
           </Button>
         </div>
         <div className="my-5">
