@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken';
 
+
 // registration
 //  ye me user k registration k liye aik controller bana rha hu 
 
@@ -232,56 +233,59 @@ export const logout = async (req,res)=>{
 // }
 export const updateProfile = async (req, res) => {
     try {
-      const { fullname, email, phoneNumber, bio, skills } = req.body;
-  
-      // Parse the skills if they are sent as a JSON string
-      const skillsArray = skills ? JSON.parse(skills) : [];
-  
-      // File handling (if applicable)
-      const file = req.file;
-  
-      // Retrieve user ID from the token
-      const userId = req.id;
-      let user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({
-          message: "User not found",
-          success: false,
+       
+        const { fullname, email, phoneNumber, bio, skills } = req.body;
+
+     
+        let skillsArray ;
+        if (skills) {
+            skillsArray = skills.split(",");
+        }
+
+        // Get the user ID from the request (assuming it's coming from JWT token or another middleware)
+        const userId = req.id;
+        let user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({
+                message: "User not found.",
+                success: false
+            });
+        }
+
+        // Update user profile with the new data if available
+        if (fullname) user.fullname = fullname;
+        if (email) user.email = email;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (bio) user.profile.bio = bio;
+        if (skillsArray.length > 0) user.profile.skills = skillsArray;
+ 
+
+        // Save the updated user
+        await user.save();
+
+        // Send the updated user data (excluding sensitive information)
+        user = {
+            _id: user._id,
+            fullname: user.fullname,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            profile: user.profile
+        };
+
+        return res.status(200).json({
+            message: "Profile updated successfully.",
+            user,
+            success: true
         });
-      }
-  
-      // Update user profile data
-      if (fullname) user.fullname = fullname;
-      if (email) user.email = email;
-      if (phoneNumber) user.phoneNumber = phoneNumber;
-      if (bio) user.profile.bio = bio;
-      if (skillsArray.length > 0) user.profile.skills = skillsArray;
-  
-      // Save the updated user profile
-      await user.save();
-  
-      // Remove sensitive data before sending response
-      user = {
-        _id: user._id,
-        fullname: user.fullname,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        role: user.role,
-        profile: user.profile,
-      };
-  
-      return res.status(200).json({
-        message: "Profile updated successfully",
-        user,
-        success: true,
-      });
     } catch (error) {
-      console.error("Error updating profile:", error);
-      res.status(500).json({
-        message: "Internal Server Error",
-        success: false,
-      });
+        console.error("Error updating profile:", error);
+        res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        });
     }
-  };
+};
+
   
