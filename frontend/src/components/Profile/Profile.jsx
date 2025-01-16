@@ -14,8 +14,8 @@ const isResume = true;
 function Profile() {
   const [open, setOpen] = useState(false);
   const skills = ["html", "css", "javascrip", ".net"];
-  const {user} = useSelector(store=>store.auth)
-  
+  const { user } = useSelector((store) => store.auth);
+
   return (
     <div>
       <Navbar />
@@ -30,9 +30,7 @@ function Profile() {
             </Avatar>
             <div>
               <h1 className="font-medium text-xl">{user?.fullname}</h1>
-              <p>
-                {user?.profile?.bio}
-              </p>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button
@@ -57,7 +55,9 @@ function Profile() {
           <h1>Skills</h1>
           <div className="flex items-center gap-1 cursor-pointer">
             {user?.profile?.skills.length !== 0 ? (
-              user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+              user?.profile?.skills.map((item, index) => (
+                <Badge key={index}>{item}</Badge>
+              ))
             ) : (
               <span>NA</span>
             )}
@@ -68,10 +68,10 @@ function Profile() {
           {isResume ? (
             <a
               target="blank"
-              href="https://github.com/Mrzakirullahkhan"
+              href={user?.profile?.resume}
               className="text-blue-500 w-full hover:underline cursor-pointer"
             >
-              zakir GitHup
+             {user?.profile?.resumerOriginalName}
             </a>
           ) : (
             <span>NA</span>

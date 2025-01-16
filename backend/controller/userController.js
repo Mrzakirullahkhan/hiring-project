@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken';
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 
 // registration
@@ -66,6 +68,9 @@ export const register = async (req, res) => {
                 success: false
             });
         }
+        const file =req.file;
+        const fileUri = getDataUri(file);
+        const cloudResponce = await cloudinary.uploader.upload(fileUri.content)
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -76,7 +81,10 @@ export const register = async (req, res) => {
             email,
             phoneNumber,
             password: hashedPassword,
-            role
+            role,
+            profile:{
+                profilePhoto:cloudResponce.secure_url,
+            }
         });
 
         return res.status(201).json({
@@ -139,7 +147,7 @@ export const login = async (req, res) => {
         }
         
         const token = await jwt.sign(tokenData, process.env.SECRET_KEY,{expiresIn:"1d"})
-        console.log(token,"controllerrrrrrrrrrr ")
+       
         user = {
             _id:user._id,
             fullname:user.fullname,
@@ -171,7 +179,8 @@ export const login = async (req, res) => {
 export const logout = async (req,res)=>{
         try {
             return res.status(200).cookie("token","",{maxAge:0}).json({
-                message:"logged out successfylly"
+                message:"logged out successfylly",
+                success: true,
             })
         } catch (error) {
             console.log(error)
@@ -236,6 +245,12 @@ export const updateProfile = async (req, res) => {
        
         const { fullname, email, phoneNumber, bio, skills } = req.body;
 
+        // clodinary work
+        const file = req.file;
+        const fileUrl = getDataUri(file);
+        const cloudResponce = await cloudinary.uploader.upload(fileUrl.content);
+
+
      
         let skillsArray ;
         if (skills) {
@@ -259,6 +274,11 @@ export const updateProfile = async (req, res) => {
         if (phoneNumber) user.phoneNumber = phoneNumber;
         if (bio) user.profile.bio = bio;
         if (skillsArray.length > 0) user.profile.skills = skillsArray;
+
+        if(cloudinary){
+                user.profile.resume = cloudResponce.secure_url
+                user.profile.resumerOriginalName = file.originalname
+        }
  
 
         // Save the updated user
