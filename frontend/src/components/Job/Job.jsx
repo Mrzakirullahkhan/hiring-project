@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Job({ job }) {
   const navigate = useNavigate();
-  console.log(job); // Log the job object to see its properties.
+// Log the job object to see its properties.
 
   return (
     <div className="p-4 rounded-md shadow-xl bg-white border border-blue-400">

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function LatestJobs() {
   // const AllJobs = [1, 2, 3, 4, 5, 6, 7, 8];
   const {allJobs} = useSelector(store=>store.job)
-  console.log(allJobs)
+
   return (
     <div className="max-w-7xl mx-auto my-15">
       <h1 className="text-4xl font-bold">
