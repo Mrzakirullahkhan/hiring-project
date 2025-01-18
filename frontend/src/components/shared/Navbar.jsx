@@ -52,16 +52,29 @@ function Navbar() {
           </h1>
         </div>
         <div className="flex items-center gap-12">
-          <ul className="flex font-medium item-center gap-5">
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/jobs">Jobs</Link>
-            </li>
-            <li>
-              <Link to="/Browser">Browser</Link>
-            </li>
+          <ul className="flex font-medium items-center gap-5">
+            {user && user.role === "recruiter" ? (
+              <>
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link to="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
 
           {!user ? (
@@ -99,17 +112,20 @@ function Navbar() {
                   <div>
                     <h4 className="font-medium">{user?.fullname}</h4>
                     <p className="text-sm text-muted-foreground">
-                     {user?.profile?.bio}
+                      {user?.profile?.bio}
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-col text-grey-600">
-                  <div className="flex w-fit items-center gap-3 cursor-pointer">
-                    <User2 />
-                    <Button variant="link" className="border-none">
-                      <Link to="/profile">View Profile</Link>
-                    </Button>
-                  </div>
+                  {user && user.role === "student" && (
+                    <div className="flex w-fit items-center gap-2 cursor-pointer">
+                      <User2 />
+                      <Button variant="link">
+                        {" "}
+                        <Link to="/profile">View Profile</Link>
+                      </Button>
+                    </div>
+                  )}
                   <div className="flex w-fit items-center gap-3 cursor-pointer">
                     <LogOut />
                     <Button

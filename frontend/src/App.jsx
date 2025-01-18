@@ -9,6 +9,9 @@ import Jobs from './components/Jobs/Jobs'
 import Browser from './components/Browser/Browser'
 import Profile from './components/Profile/Profile'
 import JobDescription from './components/JobDescription/JobDescription'
+import Companies from './components/Adim/Companies'
+import CompanyCreate from './components/Adim/CompanyCreate'
+
 
 
 const appRouter = createBrowserRouter([
@@ -40,7 +43,15 @@ const appRouter = createBrowserRouter([
     path:"/profile",
     element:<Profile/>
   },
-
+  {
+    path:"/admin/companies",
+    element: <Companies/>
+  },
+  {
+    path:"/admin/companies/create",
+    element: <CompanyCreate/>
+  },
+  
 ])
 function App() {
 
