@@ -6,6 +6,8 @@ import connectDB from "./utils/db.js";
 import userRoute from "../backend/routes/userRoutes.js"
 import companyRoute from "../backend/routes/companyRoutes.js"
 import jobRoute from "../backend/routes/jobRoutes.js"
+import applicationRoute from "../backend/routes/applicationRoute.js"
+
 
 
 dotenv.config({})
@@ -31,6 +33,9 @@ connectDB()
 app.use("/api/v1/user",userRoute)
 app.use("/api/v1/company",companyRoute)
 app.use("/api/v1/job",jobRoute)
+app.use("/api/v1/application",applicationRoute)
+
+
 app.listen(PORT,()=>{
     console.log(`server running on PORT ${PORT}`)
 })

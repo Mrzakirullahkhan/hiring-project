@@ -46,10 +46,10 @@ const jobSchema = new mongoose.Schema({
         required:true,
         ref:"User"
     },
-    application:{
+    application:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Application"
-    }
+    }]
 
     
 
