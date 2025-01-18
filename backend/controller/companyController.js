@@ -3,15 +3,15 @@ import {Company} from "../models/company.model.js"
 
 export const registerCompany = async (req,res)=>{
     try {
-        const {compnayName} = req.body;
-        if(!compnayName){
+        const {companyName} = req.body;
+        if(!companyName){
            return res.status(400).json({
             message:"company name is required",
             status:false,
 
            })
         }
-        let company = await Company.findOne({name:compnayName});
+        let company = await Company.findOne({name:companyName});
         if(company){
              return res.status(400).json({
                   message:"we can't registure same company",
@@ -19,7 +19,7 @@ export const registerCompany = async (req,res)=>{
              })
         }
         company = await Company.create({
-            name:compnayName,
+            name:companyName,
             userId:req.id
         })
         return res.status(200).json({

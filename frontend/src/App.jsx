@@ -11,6 +11,7 @@ import Profile from './components/Profile/Profile'
 import JobDescription from './components/JobDescription/JobDescription'
 import Companies from './components/Adim/Companies'
 import CompanyCreate from './components/Adim/CompanyCreate'
+import CompanySetup from './components/Adim/CompanySetup'
 
 
 
@@ -51,6 +52,11 @@ const appRouter = createBrowserRouter([
     path:"/admin/companies/create",
     element: <CompanyCreate/>
   },
+  {
+    path:"/admin/companies/:id",
+    element: <CompanySetup/>
+  },
+  
   
 ])
 function App() {

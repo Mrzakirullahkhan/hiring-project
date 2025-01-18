@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import Navbar from "../shared/Navbar";
+// import { Input } from "../ui/input";
+import axios from "axios";
+import { COMPANY_API_END_POINT } from "@/Utils/constant";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setSingleCompany } from "@/redux/companySlice";
 import { Input } from "../ui/input";
 
 const CompanyCreate = () => {
+  const [companyName, setCompanyName] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+const registerNewCompany = async () => {
+    try {
+        const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
+            headers:{
+                'Content-Type':'application/json'
+            },
+            withCredentials:true
+        });
+        if(res?.data?.success){
+            dispatch(setSingleCompany(res.data.company));
+            toast.success(res.data.message);
+            const companyId = res?.data?.company?._id;
+            navigate(`/admin/companies/${companyId}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
   return (
     <div>
@@ -24,11 +52,19 @@ const CompanyCreate = () => {
         <Input
           type="text"
           className="my-2"
+          value={companyName} // Ensure the value is bound to the state
+          onChange={(e) => setCompanyName(e.target.value)} // Update the state
           placeholder="JobHunt, Microsoft etc."
         />
+
         <div className="flex items-center gap-2 my-10">
-          <Button variant="outline" onClick={() => navigate("/admin/companies")}>Cancel</Button>
-          <Button >Continue</Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate("/admin/companies")}
+          >
+            Cancel
+          </Button>
+          <Button onClick={registerNewCompany}>Continue</Button>
         </div>
       </div>
     </div>
