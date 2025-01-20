@@ -1,14 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent } from "../ui/popover";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const CompaniesTable = () => {
-
- 
+  const { companies } = useSelector((store) => store.company);
+  // console.log(companies);
   const navigate = useNavigate();
 
   return (
@@ -24,25 +33,22 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-      
+          {companies?.map((company) => (
             <tr>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src="https://img.freepik.com/free-vector/abstract-company-logo_53876-120501.jpg?semt=ais_hybrid" />
+                  <AvatarImage src={company?.logo}  />
                 </Avatar>
               </TableCell>
-              <TableCell>rtufsol</TableCell>
-              <TableCell>xyz</TableCell>
+              <TableCell>{company.name}</TableCell>
+              <TableCell>{company.createdAt.split("T")[0]}</TableCell>
               <TableCell className="text-right cursor-pointer">
                 <Popover>
                   <PopoverTrigger>
-                    <MoreHorizontal/>
+                    <MoreHorizontal />
                   </PopoverTrigger>
                   <PopoverContent className="w-32">
-                    <div
-
-                      className="flex items-center gap-2 w-fit cursor-pointer"
-                    >
+                    <div className="flex items-center gap-2 w-fit cursor-pointer">
                       <Edit2 className="w-4" />
                       <span>Edit</span>
                     </div>
@@ -50,7 +56,7 @@ const CompaniesTable = () => {
                 </Popover>
               </TableCell>
             </tr>
-        
+          ))}
         </TableBody>
       </Table>
     </div>

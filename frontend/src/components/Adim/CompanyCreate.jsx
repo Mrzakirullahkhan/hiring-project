@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import Navbar from "../shared/Navbar";
-// import { Input } from "../ui/input";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/Utils/constant";
 import { toast } from "sonner";
@@ -16,25 +15,34 @@ const CompanyCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-const registerNewCompany = async () => {
-    try {
-        const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
-            headers:{
-                'Content-Type':'application/json'
-            },
-            withCredentials:true
-        });
-        if(res?.data?.success){
-            dispatch(setSingleCompany(res.data.company));
-            toast.success(res.data.message);
-            const companyId = res?.data?.company?._id;
-            navigate(`/admin/companies/${companyId}`);
-        }
-    } catch (error) {
-        console.log(error);
+  const registerNewCompany = async () => {
+    if (!companyName.trim()) {
+      toast.error("Company name is required");
+      return;
     }
-}
+
+    try {
+      const res = await axios.post(
+        `${COMPANY_API_END_POINT}/register`,
+        { companyName },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res?.data?.success) {
+        dispatch(setSingleCompany(res.data.company));
+        toast.success(res.data.message);
+        const companyId = res?.data?.company?._id;
+        navigate(`/admin/companies/${companyId}`);
+      }
+    } catch (error) {
+      console.error("Error Response:", error.response?.data);
+      toast.error(error.response?.data?.message || "An error occurred");
+    }
+  };
 
   return (
     <div>
@@ -52,8 +60,8 @@ const registerNewCompany = async () => {
         <Input
           type="text"
           className="my-2"
-          value={companyName} // Ensure the value is bound to the state
-          onChange={(e) => setCompanyName(e.target.value)} // Update the state
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
           placeholder="JobHunt, Microsoft etc."
         />
 
